@@ -2,6 +2,7 @@ const {Router} = require("express");
 const {check, validationResult} = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/auth.middleware")
 
 const {JWT_SECRET} = require("../options/key");
 
@@ -9,7 +10,7 @@ const User = require("../models/user");
 
 router = new Router();
 
-router.get("/", (req, res) => {
+router.get("/", authMiddleware, (req, res) => {
     res.send("Hello from Auth!");
 });
 
