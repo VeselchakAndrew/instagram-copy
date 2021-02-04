@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const {PORT} = require("./options/key");
+const expressValidator = require("express-validator");
+const { PORT } = require("./options/key");
 const connectDB = require("./options/db/db");
+const authRouter = require("./routes/auth");
 
 const app = express();
 
@@ -9,11 +11,18 @@ require("./models/user");
 require("./models/post");
 
 app.use(express.json());
-connectDB();
+// app.use(expressValidator());
+app.use("/auth", authRouter);
 
-app.use(require("./routes/auth"));
-app.use(require("./routes/post"));
+const start = async () => {
+	try {
+		await connectDB();
+		app.listen(PORT, () => {
+			console.log(`Server running on port ${PORT}`);
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+start();
