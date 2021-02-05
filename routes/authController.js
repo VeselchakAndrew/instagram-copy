@@ -4,6 +4,14 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../options/key");
 const User = require("../models/user");
 
+const generateAccessToken = (id, name) => {
+	const payload = {
+		id,
+		name,
+	};
+
+	return jwt.sign(payload, JWT_SECRET);
+};
 class authController {
 	registration = async (req, res) => {
 		try {
@@ -51,11 +59,13 @@ class authController {
 				return res.status(400).json({ message: "User not found" });
 			}
 
-			const isMatch = await bcrypt.compare(password, user.password);
+			const isMatch = bcrypt.compareSync(password, user.password);
 			if (!isMatch) {
 				return res.status(400).json({ message: "Incorrect password" });
 			}
-			const token = await jwt.sign({ id: user._id }, JWT_SECRET);
+
+			const token = generateAccessToken(user._id, user.name);
+
 			res.status(200).json({ token });
 		} catch (error) {
 			return res.status(500).json({ message: "Server error" });

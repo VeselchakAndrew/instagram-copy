@@ -4,6 +4,7 @@ const expressValidator = require("express-validator");
 const { PORT } = require("./options/key");
 const connectDB = require("./options/db/db");
 const authRouter = require("./routes/auth");
+const postRouter = require("./routes/post");
 
 const app = express();
 
@@ -13,6 +14,7 @@ require("./models/post");
 app.use(express.json());
 // app.use(expressValidator());
 app.use("/auth", authRouter);
+app.use("/", postRouter);
 
 const start = async () => {
 	try {

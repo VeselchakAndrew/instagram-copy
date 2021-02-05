@@ -5,10 +5,6 @@ const authMiddleware = require("../middleware/auth.middleware");
 
 router = new Router();
 
-router.get("/", authMiddleware, (req, res) => {
-	res.send("Hello from Auth!");
-});
-
 router.post(
 	"/signup",
 	authController.validate("createUser"),
