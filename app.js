@@ -1,6 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const expressValidator = require("express-validator");
 const { PORT } = require("./options/key");
 const connectDB = require("./options/db/db");
 const authRouter = require("./routes/auth");
@@ -12,7 +10,7 @@ require("./models/user");
 require("./models/post");
 
 app.use(express.json());
-// app.use(expressValidator());
+
 app.use("/auth", authRouter);
 app.use("/", postRouter);
 

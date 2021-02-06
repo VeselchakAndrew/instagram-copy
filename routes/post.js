@@ -5,6 +5,6 @@ const postController = require("./postController");
 
 const router = new Router();
 
-router.get("/users", authMiddleware, postController.getAllUsers);
+router.post("/createpost", authMiddleware, postController.getAllUsers);
 
 module.exports = router;

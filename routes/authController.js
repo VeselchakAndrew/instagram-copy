@@ -72,8 +72,6 @@ class authController {
 		}
 	};
 
-	getUser = async (req, res) => {};
-
 	validate = (method) => {
 		switch (method) {
 			case "createUser": {
